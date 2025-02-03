@@ -327,8 +327,8 @@ section {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
   padding: 2rem;
+  overflow: visible;
 }
 
 .rotate-text span {
@@ -367,6 +367,7 @@ section {
   border-radius: 50%;
   box-shadow: 0 1px 6px 5.94px rgba(0, 0, 0, 0.2);
   animation: rotateText 30s linear infinite;
+  overflow: visible;
 }
 
 .rotate-text .text p {
@@ -381,6 +382,7 @@ section {
   top: 0;
   left: 50%;
   font-size: 1.2rem;
+  white-space: nowrap;
 }
 
 /* ==================== About section css code ============================ */
