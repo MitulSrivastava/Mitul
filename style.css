@@ -1639,57 +1639,43 @@ body * {
     justify-content: center;
     overflow-x: visible;
   }
+}
 
+@media (max-width: 992px) and (min-width: 769px) {
   .testimonial-item {
-    max-width: 100%;
-    min-width: 100%;
-    margin-bottom: 2.5rem;
+    max-width: 48%;
+    min-width: 48%;
+    margin-bottom: 0;
   }
 
   .testimonial-content.second-row {
-    margin-top: 0;
-  }
-
-  .testimonial-content.second-row .testimonial-item:last-child {
-    margin-bottom: 0;
-  }
-}
-
-@media (max-width: 1200px) {
-  .website-preview img {
-    height: 240px;
-  }
-}
-
-@media (max-width: 992px) {
-  .website-preview img {
-    height: 260px;
+    margin-top: 1.5rem;
   }
 }
 
 @media (max-width: 768px) {
   .testimonial-content {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1.5rem;
-    justify-content: flex-start;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    padding-bottom: 0;
+    justify-content: center;
+    gap: 1.5rem;
   }
 
   .testimonial-content.second-row {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
   }
 
   .testimonial-item {
-    min-width: 85%;
-    max-width: 85%;
-    scroll-snap-align: start;
-    margin-right: 1rem;
-    padding: 0 0 1.5rem;
+    min-width: 100%;
+    max-width: 100%;
+    margin-right: 0;
+    margin-bottom: 1.5rem;
   }
 
-  .testimonial-item:last-child {
-    margin-right: 0;
+  .testimonial-content.second-row .testimonial-item:last-child,
+  .testimonial-content .testimonial-item:last-child {
+    margin-bottom: 0;
   }
 
   .testimonial-info {
@@ -1755,5 +1741,40 @@ body * {
 
   .website-preview img {
     height: 180px;
+  }
+}
+
+@media (max-width: 992px) and (min-width: 769px) {
+  .testimonial-content {
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-x: visible;
+    gap: 1.5rem;
+  }
+
+  .testimonial-item {
+    max-width: 48%;
+    min-width: 48%;
+    margin-bottom: 0;
+  }
+
+  .testimonial-content.second-row {
+    margin-top: 1.5rem;
+  }
+
+  .testimonial-content.second-row .testimonial-item:last-child {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 1200px) {
+  .website-preview img {
+    height: 240px;
+  }
+}
+
+@media (max-width: 992px) {
+  .website-preview img {
+    height: 260px;
   }
 }
