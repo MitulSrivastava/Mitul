@@ -34,6 +34,13 @@
     <link rel="stylesheet" href="style.css" />
     
     <!-- Lucide Icons & EmailJS CDNs -->
+    <style>
+      /* Custom Tailwind Overrides for green hover states */
+      .group:hover .group-hover\:text-green-500 { color: #22c55e !important; }
+      .hover\:border-green-500:hover { border-color: #22c55e !important; }
+      .hover\:shadow-\[4px_4px_0px_0px_rgba\(34\,197\,94\,1\)\]:hover { box-shadow: 4px 4px 0px 0px rgba(34,197,94,1) !important; }
+      .text-green-500 { color: #22c55e !important; }
+    </style>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.emailjs.com/sdk/2.3.2/email.min.js"></script>
   </head>
@@ -64,6 +71,7 @@
               <!-- Sliding Background Pill -->
               <div id="nav-sliding-pill" class="absolute top-1 bottom-1 bg-white rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.04)] transition-all duration-300 ease-[cubic-bezier(0.25,1,0.5,1)] pointer-events-none" style="width: 0px; left: 0px; opacity: 0;"></div>
               
+              <a href="#home" class="nav-link relative text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full transition-colors duration-300 z-10 text-black">Home</a>
               <a href="#about" class="nav-link relative text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full transition-colors duration-300 z-10 text-zinc-500 hover:text-black">About</a>
               <a href="#skills" class="nav-link relative text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full transition-colors duration-300 z-10 text-zinc-500 hover:text-black">Skills</a>
               <a href="#projects" class="nav-link relative text-[11px] font-bold uppercase tracking-widest px-4 py-2 rounded-full transition-colors duration-300 z-10 text-zinc-500 hover:text-black">Projects</a>
@@ -93,12 +101,16 @@
     </nav>
 
     <!-- Mobile Navigation Drawer Overlay -->
-    <div id="mobile-menu-overlay" class="fixed inset-0 z-[105] bg-white transition-all duration-700 ease-[cubic-bezier(0.85,0,0.15,1)] md:hidden opacity-0 pointer-events-none translate-y-4">
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-white transition-all duration-700 ease-[cubic-bezier(0.85,0,0.15,1)] md:hidden opacity-0 pointer-events-none translate-y-4" style="z-index: 99;">
       <div class="absolute top-[-20%] left-[-10%] w-[700px] h-[700px] bg-zinc-50 rounded-full blur-3xl opacity-60 -z-10"></div>
       <div class="h-full flex flex-col justify-between px-8 pt-32 pb-12">
         <div class="flex flex-col gap-4">
           <p class="text-[10px] font-mono uppercase tracking-[0.4em] text-zinc-400 mb-2">Navigation</p>
           <div class="flex flex-col gap-2">
+            <a href="#home" class="mobile-nav-link flex items-center justify-between group py-3 border-b border-zinc-100 text-3xl font-light tracking-tight text-zinc-400 hover:text-black transition-all duration-500 transform translate-y-8 opacity-0">
+              <span class="font-extrabold uppercase text-2xl tracking-tighter text-zinc-900 group-hover:translate-x-2 transition-transform duration-300">Home</span>
+              <i data-lucide="arrow-up-right" class="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-black transition-all duration-300 text-zinc-400"></i>
+            </a>
             <a href="#about" class="mobile-nav-link flex items-center justify-between group py-3 border-b border-zinc-100 text-3xl font-light tracking-tight text-zinc-400 hover:text-black transition-all duration-500 transform translate-y-8 opacity-0">
               <span class="font-extrabold uppercase text-2xl tracking-tighter text-zinc-900 group-hover:translate-x-2 transition-transform duration-300">About</span>
               <i data-lucide="arrow-up-right" class="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-black transition-all duration-300 text-zinc-400"></i>
@@ -136,7 +148,7 @@
     </div>
 
     <!-- ==================== Hero Section ==================== -->
-    <section class="relative min-h-screen flex items-center bg-white overflow-hidden pt-20">
+    <section id="home" class="relative min-h-screen flex items-center bg-white overflow-hidden pt-20">
       <!-- subtle background grid line system -->
       <div class="hero-bg-grid absolute inset-0 pointer-events-none"></div>
       
@@ -271,7 +283,10 @@
           <!-- Description text -->
           <div class="lg:col-span-8">
             <div class="inline-flex items-center gap-2 mb-4">
-              <div class="w-1 h-1 bg-black rounded-full"></div>
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </span>
               <span class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400">The Digital Creator</span>
             </div>
             
@@ -300,28 +315,20 @@
               </div>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 py-4 border-b border-zinc-100">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 py-4 items-end">
               <div class="space-y-1">
                 <p class="text-[8px] uppercase tracking-[0.2em] text-zinc-400 font-black">Location</p>
-                <p class="text-[11px] md:text-[13px] font-bold text-zinc-800">Delhi, India</p>
+                <p class="text-[11px] md:text-[13px] font-bold text-green-500">Delhi, India</p>
               </div>
               <div class="space-y-1">
                 <p class="text-[8px] uppercase tracking-[0.2em] text-zinc-400 font-black">Status</p>
-                <p class="text-[11px] md:text-[13px] font-bold text-zinc-800">Open to Projects</p>
+                <p class="text-[11px] md:text-[13px] font-bold text-green-500">Open to Projects</p>
               </div>
-            </div>
-
-            <div class="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-              <div class="flex flex-wrap gap-1">
-                <span class="text-[8px] md:text-[10px] font-bold px-2 py-1 bg-zinc-50 text-zinc-500 rounded border border-zinc-100 uppercase">React</span>
-                <span class="text-[8px] md:text-[10px] font-bold px-2 py-1 bg-zinc-50 text-zinc-500 rounded border border-zinc-100 uppercase">JavaScript</span>
-                <span class="text-[8px] md:text-[10px] font-bold px-2 py-1 bg-zinc-50 text-zinc-500 rounded border border-zinc-100 uppercase">Shopify</span>
-                <span class="text-[8px] md:text-[10px] font-bold px-2 py-1 bg-zinc-50 text-zinc-500 rounded border border-zinc-100 uppercase">WordPress</span>
-                <span class="text-[8px] md:text-[10px] font-bold px-2 py-1 bg-zinc-50 text-zinc-500 rounded border border-zinc-100 uppercase">SEO</span>
+              <div class="col-span-2 flex justify-start md:justify-end">
+                <a href="#connect" class="group w-fit flex items-center gap-2 text-[10px] md:text-xs font-bold uppercase tracking-widest text-zinc-900 border-b-2 border-zinc-900 pb-0.5 hover:text-zinc-500 hover:border-zinc-200 transition-all mb-1">
+                  Get In Touch <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
+                </a>
               </div>
-              <a href="#connect" class="group w-fit flex items-center gap-2 text-[10px] md:text-xs font-bold uppercase tracking-widest text-zinc-900 border-b-2 border-zinc-900 pb-0.5 hover:text-zinc-500 hover:border-zinc-200 transition-all">
-                Get In Touch <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform"></i>
-              </a>
             </div>
 
           </div>
@@ -351,64 +358,64 @@
         <div class="flex flex-wrap justify-center gap-4">
           
           <!-- Tag Item -->
-          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 ease-out flex items-center justify-center">
-            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-black transition-colors">React.js</span>
-            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-black scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
+          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-green-500 hover:shadow-[4px_4px_0px_0px_rgba(34,197,94,1)] transition-all duration-300 ease-out flex items-center justify-center">
+            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-green-500 transition-colors">React.js</span>
+            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-green-500 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
           </div>
 
-          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 ease-out flex items-center justify-center">
-            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-black transition-colors">JavaScript</span>
-            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-black scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
+          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-green-500 hover:shadow-[4px_4px_0px_0px_rgba(34,197,94,1)] transition-all duration-300 ease-out flex items-center justify-center">
+            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-green-500 transition-colors">JavaScript</span>
+            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-green-500 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
           </div>
 
-          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 ease-out flex items-center justify-center">
-            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-black transition-colors">HTML / CSS</span>
-            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-black scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
+          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-green-500 hover:shadow-[4px_4px_0px_0px_rgba(34,197,94,1)] transition-all duration-300 ease-out flex items-center justify-center">
+            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-green-500 transition-colors">HTML / CSS</span>
+            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-green-500 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
           </div>
 
-          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 ease-out flex items-center justify-center">
-            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-black transition-colors">Tailwind CSS</span>
-            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-black scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
+          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-green-500 hover:shadow-[4px_4px_0px_0px_rgba(34,197,94,1)] transition-all duration-300 ease-out flex items-center justify-center">
+            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-green-500 transition-colors">Tailwind CSS</span>
+            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-green-500 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
           </div>
 
-          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 ease-out flex items-center justify-center">
-            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-black transition-colors">Shopify</span>
-            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-black scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
+          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-green-500 hover:shadow-[4px_4px_0px_0px_rgba(34,197,94,1)] transition-all duration-300 ease-out flex items-center justify-center">
+            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-green-500 transition-colors">Shopify</span>
+            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-green-500 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
           </div>
 
-          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 ease-out flex items-center justify-center">
-            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-black transition-colors">WordPress</span>
-            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-black scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
+          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-green-500 hover:shadow-[4px_4px_0px_0px_rgba(34,197,94,1)] transition-all duration-300 ease-out flex items-center justify-center">
+            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-green-500 transition-colors">WordPress</span>
+            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-green-500 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
           </div>
 
-          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 ease-out flex items-center justify-center">
-            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-black transition-colors">SEO Optimization</span>
-            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-black scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
+          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-green-500 hover:shadow-[4px_4px_0px_0px_rgba(34,197,94,1)] transition-all duration-300 ease-out flex items-center justify-center">
+            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-green-500 transition-colors">SEO Optimization</span>
+            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-green-500 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
           </div>
 
-          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 ease-out flex items-center justify-center">
-            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-black transition-colors">Bootstrap</span>
-            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-black scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
+          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-green-500 hover:shadow-[4px_4px_0px_0px_rgba(34,197,94,1)] transition-all duration-300 ease-out flex items-center justify-center">
+            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-green-500 transition-colors">Bootstrap</span>
+            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-green-500 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
           </div>
 
-          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 ease-out flex items-center justify-center">
-            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-black transition-colors">Git / GitHub</span>
-            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-black scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
+          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-green-500 hover:shadow-[4px_4px_0px_0px_rgba(34,197,94,1)] transition-all duration-300 ease-out flex items-center justify-center">
+            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-green-500 transition-colors">Git / GitHub</span>
+            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-green-500 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
           </div>
 
-          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 ease-out flex items-center justify-center">
-            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-black transition-colors">Figma</span>
-            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-black scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
+          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-green-500 hover:shadow-[4px_4px_0px_0px_rgba(34,197,94,1)] transition-all duration-300 ease-out flex items-center justify-center">
+            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-green-500 transition-colors">Figma</span>
+            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-green-500 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
           </div>
 
-          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 ease-out flex items-center justify-center">
-            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-black transition-colors">C++</span>
-            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-black scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
+          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-green-500 hover:shadow-[4px_4px_0px_0px_rgba(34,197,94,1)] transition-all duration-300 ease-out flex items-center justify-center">
+            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-green-500 transition-colors">C++</span>
+            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-green-500 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
           </div>
 
-          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 ease-out flex items-center justify-center">
-            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-black transition-colors">MERN Stack</span>
-            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-black scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
+          <div class="group relative px-6 py-3 bg-white border border-zinc-200 rounded-xl shadow-[2px_2px_0px_0px_rgba(0,0,0,0.02)] hover:border-green-500 hover:shadow-[4px_4px_0px_0px_rgba(34,197,94,1)] transition-all duration-300 ease-out flex items-center justify-center">
+            <span class="text-[13px] font-bold tracking-tight text-zinc-600 group-hover:text-green-500 transition-colors">MERN Stack</span>
+            <div class="absolute top-0 right-0 w-1.5 h-1.5 bg-green-500 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-bl-md"></div>
           </div>
 
         </div>
@@ -474,7 +481,7 @@
               <a href="https://oneangelcapital.com/" target="_blank" class="absolute inset-0 p-4 flex items-center justify-center external-link z-10">
                 <img src="img/portfolio/2.png" alt="One Angel Capital" class="w-full h-full object-contain drop-shadow-md transition-transform duration-700 ease-out group-hover:scale-105" />
               </a>
-              <div class="absolute inset-0 pointer-events-none bg-black/5 flex items-center justify-center gap-3 transition-opacity duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 z-20">
+              <div class="absolute inset-0 pointer-events-none bg-black/5 flex items-center justify-center gap-3 transition-opacity duration-300 opacity-0 group-hover:opacity-100 z-20">
                 <div class="p-3 bg-black text-white rounded-full transition-all">
                   <i data-lucide="external-link" class="w-[18px] h-[18px]"></i>
                 </div>
@@ -488,9 +495,9 @@
                   <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors"></i>
                 </a>
               </div>
-              <h4 class="text-lg font-bold text-black">One Angel Capital</h4>
+              <h4 class="text-lg font-bold text-green-500">One Angel Capital</h4>
               <p class="text-xs text-gray-500 leading-relaxed line-clamp-2">A high-performance landing page designed for a premier venture capital firm. Built with modern responsive code.</p>
-              <div class="mt-4 text-xs font-bold text-emerald-500 group-hover:text-emerald-400 flex items-center gap-1 transition-colors">
+              <div class="mt-4 text-xs font-bold text-gray-500 group-hover:text-green-500 flex items-center gap-1 transition-colors">
                 View Case Study <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
               </div>
             </div>
@@ -516,7 +523,7 @@
               <a href="https://drmerchants.com/" target="_blank" class="absolute inset-0 p-4 flex items-center justify-center external-link z-10">
                 <img src="img/portfolio/dream merchants.png" alt="Dream Merchants" class="w-full h-full object-contain drop-shadow-md transition-transform duration-700 ease-out group-hover:scale-105" />
               </a>
-              <div class="absolute inset-0 pointer-events-none bg-black/5 flex items-center justify-center gap-3 transition-opacity duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 z-20">
+              <div class="absolute inset-0 pointer-events-none bg-black/5 flex items-center justify-center gap-3 transition-opacity duration-300 opacity-0 group-hover:opacity-100 z-20">
                 <div class="p-3 bg-black text-white rounded-full transition-all">
                   <i data-lucide="external-link" class="w-[18px] h-[18px]"></i>
                 </div>
@@ -530,9 +537,9 @@
                   <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors"></i>
                 </a>
               </div>
-              <h4 class="text-lg font-bold text-black">Dream Merchants</h4>
+              <h4 class="text-lg font-bold text-green-500">Dream Merchants</h4>
               <p class="text-xs text-gray-500 leading-relaxed line-clamp-2">A conversion-focused corporate portal focusing on clean user journeys, custom interactions, and structured SEO mapping.</p>
-              <div class="mt-4 text-xs font-bold text-emerald-500 group-hover:text-emerald-400 flex items-center gap-1 transition-colors">
+              <div class="mt-4 text-xs font-bold text-gray-500 group-hover:text-green-500 flex items-center gap-1 transition-colors">
                 View Case Study <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
               </div>
             </div>
@@ -558,7 +565,7 @@
               <a href="https://mitulsrivastava.github.io/ashu/" target="_blank" class="absolute inset-0 p-4 flex items-center justify-center external-link z-10">
                 <img src="img/portfolio/ashu prajapati.png" alt="Ashu Prajapati" class="w-full h-full object-contain drop-shadow-md transition-transform duration-700 ease-out group-hover:scale-105" />
               </a>
-              <div class="absolute inset-0 pointer-events-none bg-black/5 flex items-center justify-center gap-3 transition-opacity duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 z-20">
+              <div class="absolute inset-0 pointer-events-none bg-black/5 flex items-center justify-center gap-3 transition-opacity duration-300 opacity-0 group-hover:opacity-100 z-20">
                 <div class="p-3 bg-black text-white rounded-full transition-all">
                   <i data-lucide="external-link" class="w-[18px] h-[18px]"></i>
                 </div>
@@ -572,9 +579,9 @@
                   <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors"></i>
                 </a>
               </div>
-              <h4 class="text-lg font-bold text-black">Ashu Prajapati</h4>
+              <h4 class="text-lg font-bold text-green-500">Ashu Prajapati</h4>
               <p class="text-xs text-gray-500 leading-relaxed line-clamp-2">Creative portfolio displaying design work and video catalogs. Combines interactive video wrappers with layout grids.</p>
-              <div class="mt-4 text-xs font-bold text-emerald-500 group-hover:text-emerald-400 flex items-center gap-1 transition-colors">
+              <div class="mt-4 text-xs font-bold text-gray-500 group-hover:text-green-500 flex items-center gap-1 transition-colors">
                 View Case Study <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
               </div>
             </div>
@@ -597,7 +604,7 @@
               <a href="https://sunbuzzmedia.site/" target="_blank" class="absolute inset-0 p-4 flex items-center justify-center external-link z-10">
                 <img src="img/portfolio/sunbuzz.png" alt="Sunbuzz Media" class="w-full h-full object-contain drop-shadow-md transition-transform duration-700 ease-out group-hover:scale-105" />
               </a>
-              <div class="absolute inset-0 pointer-events-none bg-black/5 flex items-center justify-center gap-3 transition-opacity duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100 z-20">
+              <div class="absolute inset-0 pointer-events-none bg-black/5 flex items-center justify-center gap-3 transition-opacity duration-300 opacity-0 group-hover:opacity-100 z-20">
                 <div class="p-3 bg-black text-white rounded-full transition-all">
                   <i data-lucide="external-link" class="w-[18px] h-[18px]"></i>
                 </div>
@@ -611,9 +618,9 @@
                   <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors"></i>
                 </a>
               </div>
-              <h4 class="text-lg font-bold text-black">Sunbuzz Media</h4>
+              <h4 class="text-lg font-bold text-green-500">Sunbuzz Media</h4>
               <p class="text-xs text-gray-500 leading-relaxed line-clamp-2">Sleek dark layout web portfolio for a digital marketing agency optimized for search presence and quick loading metrics.</p>
-              <div class="mt-4 text-xs font-bold text-emerald-500 group-hover:text-emerald-400 flex items-center gap-1 transition-colors">
+              <div class="mt-4 text-xs font-bold text-gray-500 group-hover:text-green-500 flex items-center gap-1 transition-colors">
                 View Case Study <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
               </div>
             </div>
@@ -622,36 +629,56 @@
           <!-- Project Box 5 (Hidden by default on initial view if no view more clicked) -->
           <div class="project-box group cursor-pointer hidden" data-type="design">
             <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 mb-5 transition-all duration-500 group-hover:shadow-xl group-hover:-translate-y-1">
-              <div class="absolute inset-0 p-4 flex items-center justify-center">
+              <a href="#" target="_blank" class="absolute inset-0 p-4 flex items-center justify-center external-link z-10">
                 <img src="img/portfolio/Shopify.png" alt="Shopify E-commerce" class="w-full h-full object-contain drop-shadow-md transition-transform duration-700 ease-out group-hover:scale-105" />
+              </a>
+              <div class="absolute inset-0 pointer-events-none bg-black/5 flex items-center justify-center gap-3 transition-opacity duration-300 opacity-0 group-hover:opacity-100 z-20">
+                <div class="p-3 bg-black text-white rounded-full transition-all">
+                  <i data-lucide="external-link" class="w-[18px] h-[18px]"></i>
+                </div>
               </div>
             </div>
             
             <div class="space-y-2 px-1">
               <div class="flex items-center justify-between">
                 <span class="text-[10px] font-black uppercase tracking-widest text-gray-400">E-commerce UI</span>
-                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-gray-300 group-hover:text-black transition-colors"></i>
+                <a href="#" class="external-link relative z-10 p-1">
+                  <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors"></i>
+                </a>
               </div>
-              <h4 class="text-lg font-bold text-black">Custom E-commerce Stores</h4>
+              <h4 class="text-lg font-bold text-green-500">Custom E-commerce Stores</h4>
               <p class="text-xs text-gray-500 leading-relaxed line-clamp-2">UX and UI flow architectures tailored for conversion rates, customized Shopify store assets, and cart optimizations.</p>
+              <div class="mt-4 text-xs font-bold text-gray-500 group-hover:text-green-500 flex items-center gap-1 transition-colors">
+                View Case Study <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </div>
             </div>
           </div>
 
           <!-- Project Box 6 (Hidden by default on initial view if no view more clicked) -->
           <div class="project-box group cursor-pointer hidden" data-type="design">
             <div class="relative aspect-[4/3] rounded-2xl overflow-hidden bg-gray-50 border border-gray-100 mb-5 transition-all duration-500 group-hover:shadow-xl group-hover:-translate-y-1">
-              <div class="absolute inset-0 p-4 flex items-center justify-center">
+              <a href="#" target="_blank" class="absolute inset-0 p-4 flex items-center justify-center external-link z-10">
                 <img src="img/portfolio/6.jpg" alt="Performance Audit" class="w-full h-full object-contain drop-shadow-md transition-transform duration-700 ease-out group-hover:scale-105" />
+              </a>
+              <div class="absolute inset-0 pointer-events-none bg-black/5 flex items-center justify-center gap-3 transition-opacity duration-300 opacity-0 group-hover:opacity-100 z-20">
+                <div class="p-3 bg-black text-white rounded-full transition-all">
+                  <i data-lucide="external-link" class="w-[18px] h-[18px]"></i>
+                </div>
               </div>
             </div>
             
             <div class="space-y-2 px-1">
               <div class="flex items-center justify-between">
                 <span class="text-[10px] font-black uppercase tracking-widest text-gray-400">SEO & Core Web Vitals</span>
-                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-gray-300 group-hover:text-black transition-colors"></i>
+                <a href="#" class="external-link relative z-10 p-1">
+                  <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors"></i>
+                </a>
               </div>
-              <h4 class="text-lg font-bold text-black">Performance Audit</h4>
+              <h4 class="text-lg font-bold text-green-500">Performance Audit</h4>
               <p class="text-xs text-gray-500 leading-relaxed line-clamp-2">Optimizing page loads, image compression setups, code splitting configurations, and server load improvements.</p>
+              <div class="mt-4 text-xs font-bold text-gray-500 group-hover:text-green-500 flex items-center gap-1 transition-colors">
+                View Case Study <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </div>
             </div>
           </div>
 
@@ -659,10 +686,10 @@
 
         <!-- View More Projects Trigger -->
         <div id="view-more-container" class="mt-16 flex justify-center">
-          <button id="view-more-btn" class="group flex flex-col items-center gap-2 text-gray-400 hover:text-black transition-all duration-300">
-            <span class="text-[10px] font-black uppercase tracking-[0.3em] mb-2">View More Projects</span>
+          <button id="view-more-btn" class="group flex flex-col items-center gap-2 text-gray-400 hover:text-black transition-all duration-300 focus:outline-none">
+            <span id="view-more-text" class="text-[10px] font-black uppercase tracking-[0.3em] mb-2">View More Projects</span>
             <div class="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center group-hover:border-black group-hover:bg-black group-hover:text-white transition-all duration-500">
-              <i data-lucide="chevron-down" class="w-5 h-5 group-hover:translate-y-1 transition-transform"></i>
+              <i data-lucide="chevron-down" id="view-more-icon" class="w-5 h-5 group-hover:translate-y-1 transition-transform"></i>
             </div>
           </button>
         </div>
@@ -850,7 +877,7 @@
             <div class="flex items-center gap-6 md:w-1/4 shrink-0">
               <span class="font-mono text-xs text-zinc-300 group-hover:text-black transition-colors duration-300">// 01</span>
               <div class="flex flex-col gap-1">
-                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 group-hover:text-black transition-colors">Frontend Development</span>
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-green-500 transition-colors">Frontend Development</span>
                 <span class="text-[11px] text-zinc-400 font-medium">Jan 15, 2026</span>
               </div>
             </div>
@@ -875,7 +902,7 @@
             <div class="flex items-center gap-6 md:w-1/4 shrink-0">
               <span class="font-mono text-xs text-zinc-300 group-hover:text-black transition-colors duration-300">// 02</span>
               <div class="flex flex-col gap-1">
-                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 group-hover:text-black transition-colors">Performance / SEO</span>
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-green-500 transition-colors">Performance / SEO</span>
                 <span class="text-[11px] text-zinc-400 font-medium">Feb 28, 2026</span>
               </div>
             </div>
@@ -900,7 +927,7 @@
             <div class="flex items-center gap-6 md:w-1/4 shrink-0">
               <span class="font-mono text-xs text-zinc-300 group-hover:text-black transition-colors duration-300">// 03</span>
               <div class="flex flex-col gap-1">
-                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-zinc-400 group-hover:text-black transition-colors">Software Engineering</span>
+                <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-green-500 transition-colors">Software Engineering</span>
                 <span class="text-[11px] text-zinc-400 font-medium">Mar 10, 2026</span>
               </div>
             </div>
@@ -921,18 +948,21 @@
         </div>
 
         <!-- Inline Blog Viewer Element -->
-        <div id="blog-viewer" class="hidden mt-8 border border-zinc-100 rounded-2xl bg-[#fafafa] p-6 md:p-12 relative animate-fade-in">
-          <button id="blog-back-btn" class="mb-8 group flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-500 hover:text-black transition-colors">
+        <div id="blog-viewer" class="hidden blog-viewer-container relative animate-fade-in text-left">
+          <button id="blog-back-btn" class="mb-8 group flex items-center gap-2 text-xs font-bold uppercase tracking-widest blog-viewer-back-btn focus:outline-none">
             <i data-lucide="arrow-left" class="w-4 h-4 group-hover:-translate-x-1 transition-transform"></i> Back to Insights
           </button>
           
           <div class="space-y-4 mb-8">
-            <span id="blog-viewer-category" class="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-emerald-600 bg-emerald-50 px-2 py-1 rounded">Category</span>
-            <span id="blog-viewer-date" class="text-xs font-mono text-zinc-400 block mt-2">Date</span>
-            <h1 id="blog-viewer-title" class="text-3xl md:text-5xl font-black tracking-tight text-black leading-tight">Blog Title</h1>
+            <div class="flex items-center gap-3">
+              <span id="blog-viewer-category" class="blog-viewer-category">Category</span>
+              <span class="text-zinc-300 dark:text-zinc-700 font-bold text-xs">•</span>
+              <span id="blog-viewer-date" class="blog-viewer-date">Date</span>
+            </div>
+            <h1 id="blog-viewer-title" class="blog-viewer-title">Blog Title</h1>
           </div>
           
-          <div id="blog-viewer-content" class="text-zinc-700 text-sm md:text-base leading-relaxed space-y-6 max-w-3xl whitespace-pre-line border-t border-zinc-200/60 pt-8">
+          <div id="blog-viewer-content" class="blog-viewer-content text-left max-w-3xl">
             <!-- Content populated dynamically -->
           </div>
         </div>
@@ -1018,7 +1048,7 @@
             </a>
 
             <div class="pt-12 flex flex-col items-start">
-              <p class="text-zinc-400 text-xs font-medium mb-4 uppercase tracking-[0.2em]">Based in Delhi, India</p>
+              <p class="text-green-500 text-xs font-medium mb-4 uppercase tracking-[0.2em]">Based in Delhi, India</p>
               <a href="mailto:srivastavam342@gmail.com" class="group relative flex flex-wrap xl:flex-nowrap items-center gap-2 md:gap-4 text-base md:text-lg lg:text-sm xl:text-lg font-black uppercase tracking-tighter">
                 <span class="break-all">srivastavam342@gmail.com</span>
                 <div class="shrink-0 w-8 h-8 md:w-10 md:h-10 lg:w-8 lg:h-8 xl:w-10 xl:h-10 rounded-full border border-zinc-200 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all duration-500">
@@ -1117,118 +1147,123 @@
     <!-- Case Study Modal Overlay -->
     <div id="case-study-modal" class="fixed inset-0 bg-black/80 z-[110] opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4 backdrop-blur-md">
       
-         <!-- Modal Container -->
-      <div id="case-study-content" class="modal-new-bg modal-new-border border rounded-xl w-full max-w-2xl max-h-[70vh] overflow-hidden shadow-2xl relative transition-all duration-300 scale-95 opacity-0 flex flex-col">
+      <!-- Modal Container -->
+      <div id="case-study-content" class="modal-new-bg modal-new-border border rounded-2xl w-full max-w-2xl max-h-[70vh] overflow-hidden shadow-2xl relative transition-all duration-300 scale-95 opacity-0 flex flex-col">
         
         <!-- Close Button -->
-        <button id="close-modal-btn" class="absolute top-4 right-4 modal-new-close transition-colors focus:outline-none z-10">
-          <i data-lucide="x" class="w-5 h-5"></i>
+        <button id="close-modal-btn" class="absolute top-5 right-5 modal-new-close transition-colors focus:outline-none z-10" style="background: var(--bg-secondary); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+          <i data-lucide="x" class="w-4 h-4"></i>
         </button>
+
+        <!-- Sticky Header -->
+        <div class="px-8 md:px-10 pt-8 pb-5 shrink-0">
+          <p id="modal-subtitle" class="text-[9px] font-bold uppercase tracking-[0.2em] mb-2 flex items-center gap-2" style="color: #10b981;">
+            <span style="width: 6px; height: 6px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
+            <span id="modal-subtitle-text">Category</span>
+          </p>
+          <h2 id="modal-title" class="text-2xl md:text-3xl font-black modal-new-title text-left tracking-tight"></h2>
+        </div>
 
         <!-- Scrollable content -->
         <div class="flex-1 overflow-y-auto custom-scrollbar w-full" style="min-height: 0;">
           
-          <!-- Header -->
-          <div class="px-8 md:px-10 pt-8 pb-6">
-            <h2 id="modal-title" class="text-2xl md:text-3xl font-bold modal-new-title mb-0 text-left"></h2>
-          </div>
-
           <!-- Stats Row -->
-          <div id="modal-stats-row" class="hidden px-8 md:px-10 pb-6">
-            <div class="modal-new-box border rounded-xl p-5 grid grid-cols-3 gap-4 text-center">
+          <div id="modal-stats-row" class="hidden px-8 md:px-10 py-6" style="border-bottom: 1px solid var(--border-primary);">
+            <div class="grid grid-cols-3 gap-4 text-center">
               <div>
-                <p class="text-[9px] font-bold uppercase modal-new-heading tracking-[0.15em] mb-1" id="modal-stat1-label">Traffic</p>
-                <p class="text-2xl md:text-3xl font-black modal-new-title" id="modal-stat1-value">—</p>
-                <p class="text-[9px] modal-new-subtitle mt-0.5" id="modal-stat1-sub"></p>
+                <p class="text-2xl md:text-3xl font-black mb-1" style="color: #10b981;" id="modal-stat1-value">—</p>
+                <p class="text-[9px] font-bold uppercase modal-new-subtitle tracking-[0.1em]" id="modal-stat1-sub"></p>
               </div>
-              <div class="border-l modal-new-border">
-                <p class="text-[9px] font-bold uppercase modal-new-heading tracking-[0.15em] mb-1" id="modal-stat2-label">Leads</p>
-                <p class="text-2xl md:text-3xl font-black modal-new-title" id="modal-stat2-value">—</p>
-                <p class="text-[9px] modal-new-subtitle mt-0.5" id="modal-stat2-sub"></p>
+              <div style="border-left: 1px solid var(--border-primary); border-right: 1px solid var(--border-primary);">
+                <p class="text-2xl md:text-3xl font-black mb-1" style="color: #10b981;" id="modal-stat2-value">—</p>
+                <p class="text-[9px] font-bold uppercase modal-new-subtitle tracking-[0.1em]" id="modal-stat2-sub"></p>
               </div>
-              <div class="border-l modal-new-border">
-                <p class="text-[9px] font-bold uppercase modal-new-heading tracking-[0.15em] mb-1" id="modal-stat3-label">Bounce</p>
-                <p class="text-2xl md:text-3xl font-black modal-new-title" id="modal-stat3-value">—</p>
-                <p class="text-[9px] modal-new-subtitle mt-0.5" id="modal-stat3-sub"></p>
+              <div>
+                <p class="text-2xl md:text-3xl font-black mb-1" style="color: #10b981;" id="modal-stat3-value">—</p>
+                <p class="text-[9px] font-bold uppercase modal-new-subtitle tracking-[0.1em]" id="modal-stat3-sub"></p>
               </div>
             </div>
           </div>
 
           <!-- Details Sections -->
-          <div class="modal-new-body text-sm md:text-base leading-relaxed space-y-6 w-full px-8 md:px-10 pb-6">
+          <div class="modal-new-body text-sm leading-relaxed w-full px-8 md:px-10 py-6" style="border-bottom: 1px solid var(--border-primary);">
             
             <!-- New Format Sections -->
-            <div id="modal-overview-container" class="hidden">
-              <h3 class="text-[10px] font-bold uppercase tracking-[0.15em] mb-2 text-left" style="color: #10b981;">Overview</h3>
-              <p id="modal-overview" class="text-left"></p>
+            <div id="modal-overview-container" class="hidden modal-section-block">
+              <h3 class="modal-section-heading">Overview</h3>
+              <p id="modal-overview" class="text-left modal-new-subtitle"></p>
             </div>
-            <div id="modal-problem-container" class="hidden">
-              <h3 class="text-[10px] font-bold uppercase tracking-[0.15em] mb-2 text-left" style="color: #10b981;">Problem</h3>
-              <p id="modal-problem" class="text-left"></p>
+            <div id="modal-problem-container" class="hidden modal-section-block">
+              <h3 class="modal-section-heading">Problem</h3>
+              <p id="modal-problem" class="text-left modal-new-subtitle"></p>
             </div>
-            <div id="modal-solution-container" class="hidden">
-              <h3 class="text-[10px] font-bold uppercase tracking-[0.15em] mb-2 text-left" style="color: #10b981;">Solution</h3>
-              <p id="modal-solution" class="text-left"></p>
+            <div id="modal-solution-container" class="hidden modal-section-block">
+              <h3 class="modal-section-heading">Solution</h3>
+              <p id="modal-solution" class="text-left modal-new-subtitle"></p>
             </div>
-            <div id="modal-features-container" class="hidden">
-              <h3 class="text-[10px] font-bold uppercase tracking-[0.15em] mb-2 text-left" style="color: #10b981;">Features</h3>
-              <p id="modal-features" class="text-left"></p>
+            <div id="modal-features-container" class="hidden modal-section-block">
+              <h3 class="modal-section-heading">Features</h3>
+              <p id="modal-features" class="text-left modal-new-subtitle"></p>
             </div>
             
             <!-- Legacy Format Sections -->
-            <div id="modal-about-container" class="hidden">
-              <h3 class="text-[10px] font-bold uppercase tracking-[0.15em] mb-2 text-left" style="color: #10b981;">About This Project</h3>
-              <p id="modal-about" class="text-left"></p>
+            <div id="modal-about-container" class="hidden modal-section-block">
+              <h3 class="modal-section-heading">About This Project</h3>
+              <p id="modal-about" class="text-left modal-new-subtitle"></p>
             </div>
-            <div id="modal-contribution-container" class="hidden">
-              <h3 class="text-[10px] font-bold uppercase tracking-[0.15em] mb-2 text-left" style="color: #10b981;">Our Contribution</h3>
-              <p id="modal-contribution" class="text-left"></p>
+            <div id="modal-contribution-container" class="hidden modal-section-block">
+              <h3 class="modal-section-heading">Our Contribution</h3>
+              <p id="modal-contribution" class="text-left modal-new-subtitle"></p>
             </div>
           </div>
 
           <!-- Tech Stack -->
-          <div id="modal-software-section" class="w-full px-8 md:px-10 pb-6 hidden">
-            <h3 class="text-[10px] font-bold uppercase tracking-[0.15em] mb-3 text-left" style="color: #10b981;">Software Used</h3>
+          <div id="modal-software-section" class="w-full px-8 md:px-10 py-6 hidden" style="border-bottom: 1px solid var(--border-primary);">
+            <h3 class="modal-section-heading">Software Used</h3>
             <div id="modal-software-container" class="flex flex-wrap gap-2">
               <!-- Pills injected via JS -->
             </div>
           </div>
 
           <!-- Client / Category / Date Info Bar -->
-          <div id="modal-info-bar" class="hidden mx-8 md:mx-10 mb-6 modal-new-box border rounded-xl p-4 grid grid-cols-3 gap-4">
-            <div>
-              <p class="text-[9px] font-bold uppercase modal-new-heading tracking-[0.1em] mb-1">Client</p>
-              <p id="modal-client" class="text-sm font-bold modal-new-title"></p>
-            </div>
-            <div>
-              <p class="text-[9px] font-bold uppercase modal-new-heading tracking-[0.1em] mb-1">Category</p>
-              <p id="modal-category" class="text-sm font-bold modal-new-title"></p>
-            </div>
-            <div>
-              <p class="text-[9px] font-bold uppercase modal-new-heading tracking-[0.1em] mb-1">Date</p>
-              <p id="modal-date" class="text-sm font-bold modal-new-title"></p>
+          <div id="modal-info-bar" class="hidden px-8 md:px-10 py-5" style="border-bottom: 1px solid var(--border-primary);">
+            <div class="grid grid-cols-3 gap-4">
+              <div>
+                <p class="text-[9px] font-bold uppercase modal-new-subtitle tracking-[0.1em] mb-1">Client</p>
+                <p id="modal-client" class="text-sm font-bold modal-new-title"></p>
+              </div>
+              <div style="border-left: 1px solid var(--border-primary); padding-left: 1rem;">
+                <p class="text-[9px] font-bold uppercase modal-new-subtitle tracking-[0.1em] mb-1">Category</p>
+                <p id="modal-category" class="text-sm font-bold modal-new-title"></p>
+              </div>
+              <div style="border-left: 1px solid var(--border-primary); padding-left: 1rem;">
+                <p class="text-[9px] font-bold uppercase modal-new-subtitle tracking-[0.1em] mb-1">Date</p>
+                <p id="modal-date" class="text-sm font-bold modal-new-title"></p>
+              </div>
             </div>
           </div>
 
-          <!-- Key Result Box (scrollable, for new format projects) -->
-          <div id="modal-key-result-container" class="hidden mx-8 md:mx-10 mb-6 modal-new-box border rounded-xl p-5 md:p-6 flex flex-col md:flex-row md:items-center justify-between text-left">
-            <div>
-              <p class="text-[10px] font-bold uppercase modal-new-subtitle tracking-[0.1em] mb-2 md:mb-1">Key Result</p>
-              <p id="modal-results" class="text-lg md:text-xl font-bold modal-new-title leading-snug"></p>
-            </div>
-            <div class="modal-new-icon-bg p-3 rounded-lg hidden md:block shrink-0 ml-4">
-              <i data-lucide="trending-up" class="w-5 h-5 modal-new-subtitle"></i>
+          <!-- Key Result Box -->
+          <div id="modal-key-result-container" class="hidden px-8 md:px-10 py-6">
+            <div class="modal-new-box border rounded-xl p-5 flex flex-col md:flex-row md:items-center justify-between text-left">
+              <div>
+                <p class="text-[9px] font-bold uppercase tracking-[0.1em] mb-2" style="color: #10b981;">Key Result</p>
+                <p id="modal-results" class="text-base md:text-lg font-bold modal-new-title leading-snug"></p>
+              </div>
+              <div class="hidden md:flex items-center justify-center shrink-0 ml-4" style="width: 40px; height: 40px; border-radius: 10px; background: rgba(16, 185, 129, 0.1);">
+                <i data-lucide="trending-up" class="w-5 h-5" style="color: #10b981;"></i>
+              </div>
             </div>
           </div>
 
         </div>
 
         <!-- Fixed Bottom Actions Container -->
-        <div class="w-full px-8 md:px-10 py-4 border-t modal-new-border shrink-0 modal-new-bg rounded-b-xl">
-          <a href="#" id="modal-link-live" target="_blank" class="w-full modal-new-btn-primary font-bold py-3 rounded-lg text-sm transition-colors text-center flex items-center justify-center gap-2">
+        <div class="w-full px-8 md:px-10 py-4 border-t modal-new-border shrink-0 modal-new-bg rounded-b-2xl">
+          <a href="#" id="modal-link-live" target="_blank" class="w-full font-bold py-3.5 rounded-xl text-sm transition-all text-center flex items-center justify-center gap-2" style="background: #10b981; color: #fff;">
             View Full Project <i data-lucide="external-link" class="w-4 h-4"></i>
           </a>
-          <a href="#" id="modal-link-source" target="_blank" class="w-full modal-new-btn-secondary border font-bold py-3 rounded-lg text-sm transition-colors text-center flex items-center justify-center gap-2 hidden mt-3">
+          <a href="#" id="modal-link-source" target="_blank" class="w-full modal-new-btn-secondary border font-bold py-3.5 rounded-xl text-sm transition-colors text-center flex items-center justify-center gap-2 hidden mt-3">
             View Source
           </a>
         </div>

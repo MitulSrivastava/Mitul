@@ -308,7 +308,9 @@ body {
 .dark .text-black,
 .dark .text-zinc-950,
 .dark .text-zinc-900,
+.dark .text-zinc-800,
 .dark .text-gray-900,
+.dark .text-gray-800,
 .dark .hover\:text-black:hover,
 .dark .hover\:text-zinc-900:hover,
 .dark .hover\:text-zinc-950:hover,
@@ -320,8 +322,11 @@ body {
   color: var(--text-primary) !important;
 }
 
+.dark .text-zinc-700,
 .dark .text-zinc-600,
 .dark .text-zinc-500,
+.dark .text-gray-700,
+.dark .text-gray-600,
 .dark .text-gray-500 {
   color: var(--text-secondary) !important;
 }
@@ -383,10 +388,20 @@ body {
   border-color: var(--border-primary) !important;
 }
 
-.dark #theme-toggle {
+.dark #theme-toggle,
+.dark #mobile-menu-toggle {
   background-color: var(--bg-secondary) !important;
   border-color: var(--border-primary) !important;
   color: var(--text-primary) !important;
+}
+
+.dark #mobile-menu-toggle {
+  border-width: 1px !important;
+  border-style: solid !important;
+}
+
+.dark #mobile-menu-toggle span {
+  background-color: var(--text-primary) !important;
 }
 
 .dark #mobile-menu-overlay {
@@ -509,6 +524,37 @@ body.modal-open {
   overflow-y: auto !important;
 }
 
+.modal-section-heading {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #10b981;
+  margin-bottom: 8px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modal-section-heading::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  background: #10b981;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.modal-section-block + .modal-section-block {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-primary);
+}
+
+.py-3\.5 { padding-top: 0.875rem; padding-bottom: 0.875rem; }
+.rounded-2xl { border-radius: 1rem; }
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 8px;
 }
@@ -529,3 +575,83 @@ body.modal-open {
 .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
+
+/* ==========================================
+   PREMIUM BLOG READER LAYOUT STYLES 
+   ========================================== */
+.blog-viewer-container {
+  background-color: transparent !important;
+  border: none !important;
+  max-width: 48rem; /* 3xl */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.blog-viewer-title {
+  font-size: 1.875rem; /* text-3xl */
+  font-weight: 900; /* font-black */
+  letter-spacing: -0.025em; /* tracking-tight */
+  line-height: 1.2;
+  color: var(--text-primary) !important;
+}
+
+.blog-viewer-category {
+  font-size: 0.75rem; /* text-xs */
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #10b981; /* Emerald 500 */
+}
+
+.blog-viewer-date {
+  font-size: 0.75rem; /* text-xs */
+  font-family: var(--font-mono);
+  color: var(--text-secondary) !important;
+}
+
+.blog-viewer-content {
+  border-top: 1px solid var(--border-primary) !important;
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+
+/* Beautiful Editorial Layout for Paragraphs */
+.blog-viewer-lead {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-primary) !important;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.blog-viewer-paragraph {
+  font-size: 0.95rem; /* text-[15px] */
+  font-weight: 400;
+  color: var(--text-secondary) !important;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+/* Back Button Styles */
+.blog-viewer-back-btn {
+  color: var(--text-secondary) !important;
+  transition: color 0.3s ease;
+}
+.blog-viewer-back-btn:hover {
+  color: var(--text-primary) !important;
+}
+
+@media (min-width: 768px) {
+  .blog-viewer-title {
+    font-size: 2.75rem; /* text-4xl/5xl */
+  }
+  .blog-viewer-lead {
+    font-size: 1.25rem;
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+}
+

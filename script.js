@@ -15,24 +15,69 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ==================== Nav Pill Dynamic Slider ====================
+  // ==================== Nav Pill Dynamic Slider & Scrollspy ====================
   const navLinks = document.querySelectorAll(".nav-link");
   const slidingPill = document.getElementById("nav-sliding-pill");
   const desktopMenu = document.getElementById("desktop-menu");
+  
+  let currentActiveLink = null;
+
+  const movePillTo = (link) => {
+    if (!link) {
+      slidingPill.style.opacity = "0";
+      return;
+    }
+    const rect = link.getBoundingClientRect();
+    const parentRect = desktopMenu.getBoundingClientRect();
+    slidingPill.style.width = `${rect.width}px`;
+    slidingPill.style.left = `${rect.left - parentRect.left}px`;
+    slidingPill.style.opacity = "1";
+  };
+
+  const setActiveLink = (targetId) => {
+    currentActiveLink = document.querySelector(`.nav-link[href="#${targetId}"]`);
+    navLinks.forEach(link => {
+      if (link === currentActiveLink) {
+        link.classList.add("text-black");
+        link.classList.remove("text-zinc-500");
+      } else {
+        link.classList.add("text-zinc-500");
+        link.classList.remove("text-black");
+      }
+    });
+    // Move pill if not hovering menu
+    if (!desktopMenu.matches(':hover')) {
+      movePillTo(currentActiveLink);
+    }
+  };
 
   navLinks.forEach(link => {
     link.addEventListener("mouseenter", () => {
-      const rect = link.getBoundingClientRect();
-      const parentRect = desktopMenu.getBoundingClientRect();
-      slidingPill.style.width = `${rect.width}px`;
-      slidingPill.style.left = `${rect.left - parentRect.left}px`;
-      slidingPill.style.opacity = "1";
+      movePillTo(link);
     });
   });
 
   desktopMenu.addEventListener("mouseleave", () => {
-    slidingPill.style.opacity = "0";
+    movePillTo(currentActiveLink);
   });
+
+  // Intersection Observer for Scrollspy
+  const sections = document.querySelectorAll("section[id]");
+  const observerOptions = {
+    root: null,
+    rootMargin: "-20% 0px -60% 0px", // triggers when section is around middle of screen
+    threshold: 0
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setActiveLink(entry.target.id);
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(sec => observer.observe(sec));
 
   // ==================== Mobile Navigation Drawer ====================
   const menuToggle = document.getElementById("mobile-menu-toggle");
@@ -137,10 +182,29 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    if (isExpanded || totalMatches <= 4) {
+    const viewMoreText = document.getElementById("view-more-text");
+    const viewMoreIcon = document.getElementById("view-more-icon");
+
+    if (totalMatches <= 4) {
       viewMoreContainer.style.display = "none";
     } else {
       viewMoreContainer.style.display = "flex";
+      if (isExpanded) {
+        if (viewMoreText) viewMoreText.innerText = "View Less";
+        if (viewMoreIcon) {
+          viewMoreIcon.setAttribute("data-lucide", "chevron-up");
+          viewMoreIcon.className = "w-5 h-5 group-hover:-translate-y-1 transition-transform";
+        }
+      } else {
+        if (viewMoreText) viewMoreText.innerText = "View More Projects";
+        if (viewMoreIcon) {
+          viewMoreIcon.setAttribute("data-lucide", "chevron-down");
+          viewMoreIcon.className = "w-5 h-5 group-hover:translate-y-1 transition-transform";
+        }
+      }
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
     }
   };
 
@@ -157,8 +221,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (filterBtnWeb) filterBtnWeb.addEventListener("click", () => setActiveFilter(filterBtnWeb, "web"));
   if (filterBtnDesign) filterBtnDesign.addEventListener("click", () => setActiveFilter(filterBtnDesign, "design"));
   if (viewMoreBtn) viewMoreBtn.addEventListener("click", () => {
-    isExpanded = true;
+    isExpanded = !isExpanded;
     updateProjectVisibility();
+    if (!isExpanded) {
+      document.getElementById("projects").scrollIntoView({ behavior: "smooth" });
+    }
   });
 
   updateProjectVisibility();
@@ -273,7 +340,21 @@ By coding with functional minimalism, you ensure that the project remains light,
         blogViewerCategory.textContent = data.category;
         blogViewerDate.textContent = data.date;
         blogViewerTitle.textContent = data.title;
-        blogViewerContent.textContent = data.content;
+        
+        // Render content dynamically splitting by paragraph for better spacing and formatting
+        const paragraphs = data.content.split(/\n\n+/);
+        let htmlContent = "";
+        paragraphs.forEach((p, index) => {
+          const trimmedText = p.trim();
+          if (trimmedText) {
+            if (index === 0) {
+              htmlContent += `<p class="blog-viewer-lead">${trimmedText}</p>`;
+            } else {
+              htmlContent += `<p class="blog-viewer-paragraph">${trimmedText}</p>`;
+            }
+          }
+        });
+        blogViewerContent.innerHTML = htmlContent;
         
         blogsListContainer.style.display = "none";
         blogViewer.classList.remove("hidden");
@@ -401,8 +482,12 @@ By coding with functional minimalism, you ensure that the project remains light,
 
   if (modalOverlay && modalContent) {
     const openModal = (btn) => {
-      // Populate Title
+      // Populate Title & Category
       document.getElementById("modal-title").innerText = btn.dataset.title || "";
+      const subtitleText = document.getElementById("modal-subtitle-text");
+      if (subtitleText) {
+        subtitleText.innerText = btn.dataset.category || "Project Detail";
+      }
 
       // Handle Section Visibility
       const updateSection = (id, content) => {
