@@ -143,8 +143,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ==================== Project Filter & View More ====================
   const filterBtnAll = document.getElementById("filter-btn-all");
+  const filterBtnAI = document.getElementById("filter-btn-ai");
   const filterBtnWeb = document.getElementById("filter-btn-web");
-  const filterBtnDesign = document.getElementById("filter-btn-design");
+
   const projectBoxes = document.querySelectorAll(".project-box");
   const viewMoreBtn = document.getElementById("view-more-btn");
   const viewMoreContainer = document.getElementById("view-more-container");
@@ -218,8 +219,9 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (filterBtnAll) filterBtnAll.addEventListener("click", () => setActiveFilter(filterBtnAll, "all"));
+  if (filterBtnAI) filterBtnAI.addEventListener("click", () => setActiveFilter(filterBtnAI, "ai"));
   if (filterBtnWeb) filterBtnWeb.addEventListener("click", () => setActiveFilter(filterBtnWeb, "web"));
-  if (filterBtnDesign) filterBtnDesign.addEventListener("click", () => setActiveFilter(filterBtnDesign, "design"));
+
   if (viewMoreBtn) viewMoreBtn.addEventListener("click", () => {
     isExpanded = !isExpanded;
     updateProjectVisibility();
@@ -270,56 +272,154 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   // ==================== Insights (Blogs) Content & Viewer ====================
-  const blogsData = {
+    const blogsData = {
     1: {
-      title: "From Idea to MVP: How Starting Small Changed the Way I Build",
-      category: "Frontend Development",
-      date: "Jan 15, 2026",
-      content: `For a long time, I believed building something real required readiness. A proper plan. Clear architecture. Confidence in my skills. I thought shipping was something you did "after" everything made sense. Until then, ideas stayed safely in my head or inside notes.
+      title: "How I Built a Production Voice Agent for Real Estate (Twilio + OpenAI + RAG)",
+      category: "AI Voice Agents",
+      date: "May 28, 2026",
+      content: `Real estate teams lose qualified leads to delayed response times. The standard fix is a chatbot — and I've shipped enough of them to know they don't solve the actual problem. Visitors who reach out by phone want to talk to someone. A chatbot saying "let us know your details and we'll get back to you" is exactly the moment conversion drops.
 
-Most of my time went into thinking, not building. Planning felt productive. Watching others ship impressive projects felt inspiring and quietly intimidating. I convinced myself I was preparing, when in reality I was avoiding the risk of starting.
+The architecture I now ship for inbound real-estate calls:
+1. Twilio picks up the call and streams audio to my backend in real time.
+2. OpenAI's realtime API handles speech-to-speech with sub-second latency.
+3. A RAG layer retrieves property knowledge — inventory, pricing, location details — from a Pinecone vector store that re-embeds whenever listings change.
+4. An n8n workflow orchestrates lead capture, CRM sync, and hand-off back to a human.
 
-What changed wasn’t a sudden burst of motivation. It was a small, almost careless decision to start something. Just a simple frontend screen for a problem that mildly annoyed me. No roadmap. No expectation. Just code on a dark screen late at night.
+The hand-off logic is what most builds get wrong. The agent shouldn't try to close the deal. It should qualify intent in natural conversation, capture context, and route high-value calls to a human with the full transcript and a summary attached. Hot leads ring sales directly. Cold ones get an automated follow-up email.
 
-I still remember sitting at 1 AM, staring at a small bug that refused to go away. It wasn’t a big feature or an important release—just a button behaving slightly wrong. But in that moment, the project felt real. I wasn’t thinking about best practices or future scalability. I just wanted that one thing to work.
+What I've learned shipping this stack:
 
-And somewhere between fixing that bug and refreshing the browser for the tenth time, something clicked. Once something exists—even imperfectly—it starts talking back. The UI shows you what’s missing. The flow exposes what doesn’t make sense. Ideas stop being theoretical and start becoming obvious. Small changes suggest bigger improvements. Not because you planned them, but because the product demands them.
+Latency matters more than you think. Anything above 800ms feels robotic. Streaming audio both ways is non-negotiable.
 
-Before this, I believed ideas came first and execution followed. Now I know execution "creates" ideas. As I kept building, the project grew but not in the way I used to imagine. It didn’t explode into complexity. It evolved naturally. Each enhancement came from friction I felt while using it myself. Features stopped feeling exciting just because they were possible. They felt necessary or unnecessary based on reality.`
+RAG beats fine-tuning for property knowledge. Listings change weekly; embeddings are cheap to refresh. Fine-tuning is expensive to maintain.
+
+Always record the call. The audit trail saves you when something breaks, and it gives the human picking up the lead full context.
+
+Edge cases will eat your week. The hand-off threshold needs constant tuning for the first month — too eager and you wake sales at midnight; too cautious and Hot leads cool off.
+
+If you're building anything with voice + AI for a business that actually sells over the phone, this is the stack I'd recommend over any off-the-shelf voice-agent platform. The pieces are mature; the wiring is where the value lives.`
     },
     2: {
-      title: "The Truth About E-commerce Speed Optimization",
-      category: "Performance / SEO",
-      date: "Feb 28, 2026",
-      content: `In digital retail, speed isn’t just a technical metric; it is directly tied to revenue. Studies consistently show that a page load delay of even one second can decrease conversion rates by up to 20%.
+      title: "Zero-Touch Lead Qualification: How GPT-4o-mini and n8n Replaced Manual Lead Triage",
+      category: "AI Automation",
+      date: "Apr 22, 2026",
+      content: `Most B2B businesses I work with have the same problem: sales reps spend 30–40% of their week triaging leads that should have been pre-scored before they ever hit the inbox. The fix isn't more salespeople — it's removing the human from triage entirely.
 
-Most e-commerce platforms suffer from bloated scripts, massive unoptimized assets, and slow server response times. Over-reliance on third-party plugins adds dozens of external requests that block parsing.
+The n8n workflow I built for this:
 
-How to optimize for Core Web Vitals:
-1. Critical CSS Inlining: Ensure the above-the-fold content loads instantaneously.
-2. Asset Compression: Transition all product mockups to modern WebP formats and load them with explicit dimensions.
-3. Lazy Loading & Script Deferral: Defer non-critical analytics and chat widgets so the browser focuses first on DOM rendering.
+Trigger: a Google Form submission (you can swap for Typeform, HubSpot, anything with a webhook).
 
-By auditing and eliminating render-blocking operations, you create frictionless buyer journeys that retain users and increase sales.`
+AI Qualification node: GPT-4o-mini scores the lead against a rubric — opportunity value, lead stage, company info, email quality, completeness. It returns structured JSON with a score (0–100), priority tier, and recommended action items.
+
+Parse + Save: error-handling on bad JSON, then a write to a status sheet for tracking.
+
+Categorize: Hot (70+), Warm (40–69), Cold (<40).
+
+CRM Sync: contact created or updated in HighLevel automatically.
+
+Notification: the sales rep gets an email with lead details, the AI's score breakdown, and suggested next steps.
+
+The rubric is the unsexy part that decides whether this works. Spend a day with the sales team writing it. Mine for a real-estate client weighted opportunity value (+30) based on self-reported budget and intent signals, lead stage (+25) for explicit "ready to buy" vs "still exploring", company info (+20) for B2B context, completeness (+15) because more fields filled means more serious, and professional email (+10) because @company.com signals more than @gmail.com.
+
+What changed after deployment: response time on Hot leads dropped from hours to under five minutes. About 80% of Cold leads stopped reaching the sales team entirely — they got routed into an automated nurture sequence instead. The team had a full audit trail for every scoring decision, so they could tune the rubric weekly without guessing.
+
+Total stack cost: under $20/month. The most expensive part is the Azure OpenAI tokens, and that's still nothing compared to one rep's hour.`
     },
     3: {
-      title: "Why Clean Code Beats Complex Architectures Every Single Time",
-      category: "Software Engineering",
-      date: "Mar 10, 2026",
-      content: `How prioritizing readability, minimal dependencies, and simple state management keeps projects maintainable over the long run.
+      title: "Building a $0 SEO Rank Tracker with n8n, MCP, and Google Sheets",
+      category: "AI Automation",
+      date: "Mar 18, 2026",
+      content: `I was paying $99/month for an SEO rank tracker. Then I built one in n8n in an afternoon. Here's the exact workflow.
 
-In software engineering, there is a constant temptation to build for future complexity. Developers spend days designing abstract frameworks, highly modularized plugin patterns, and layered architectures for features that might never be built.
+The stack:
 
-This is known as over-engineering, and it carries a heavy cost: readability drops, onboarding developers takes longer, and debugging simple issues becomes a multi-file tracing hunt.
+Trigger: a cron node, daily or weekly depending on how often the team wants the data.
 
-True architectural quality lies in simplicity. Clean, readable code that solves the immediate problem directly is always easier to refactor than a complex framework built on predictions.
+Input: a keyword + domain pair that lives in a Google Sheet so adding more is friction-free.
 
-Principles of functional simplicity:
-1. Don't add layers of abstraction until they are actually needed.
-2. Rely on native browser features and vanilla solutions before importing packages.
-3. Document why code does something, keeping the "how" clear and readable.
+SERP Scraper: an MCP-powered agent that grabs Google search results for the keyword.
 
-By coding with functional minimalism, you ensure that the project remains light, easy to modify, and robust against software rot.`
+OpenAI Chat Model: ranks the results, identifies the target domain's position, and extracts SERP-feature data (featured snippets, People Also Ask, etc).
+
+Auto-Fixing Output Parser: enforces structured JSON output. If the model returns malformed data, it retries instead of crashing the run.
+
+Format SERP Results: a small JS node that normalizes the output into the schema the sheet expects.
+
+Log to Google Sheets: appendOrUpdate writes the new ranking to a tracking sheet ready for charting.
+
+The MCP integration is the unlock. Before MCP, SERP scraping meant maintaining your own scraper, handling CAPTCHAs, rotating proxies. With MCP, the scraper agent is a tool the model calls. The model decides when to use it, gets structured results back, and your workflow stays clean.
+
+Tracking results over time: the sheet has columns for date, keyword, domain, position, top 3 competitors, and detected SERP features. Conditional formatting flags position changes. A pivot table or Looker Studio dashboard turns that into a rank graph over time.
+
+The whole thing runs for the cost of the OpenAI tokens — under $5/month for tracking 50 keywords daily.
+
+Why I'm sharing the build: the gap between "pay for a tool" and "build your own" is shrinking fast. If you're a marketing team that already has n8n running for other workflows, adding rank tracking is two hours of work. That's a $1,200/year recurring saving for half a Saturday.`
+    },
+    4: {
+      title: "Grah Kalyan: Architecting a Multi-Role Marketplace with Custom WooCommerce Plugins",
+      category: "Business Platforms",
+      date: "Feb 15, 2026",
+      content: `Grah Kalyan is a religious marketplace that connects customers, administrators, managers, and pandits through a single operational system. When I started building it, the temptation was obvious: stack a few off-the-shelf WooCommerce extensions and call it a day. I shipped a custom-plugin architecture instead. Here's why.
+
+The problem: four distinct user roles, each with completely different workflows. An admin needs system-wide order visibility. A manager handles a region's pandit network. A pandit sees only their own bookings. A customer sees a clean booking flow. WooCommerce's default permission model can't express this cleanly. The plugin ecosystem can — but stitching five extensions together for one use case creates a fragile system where any single plugin update can break everything.
+
+The architecture I shipped:
+
+WordPress + WooCommerce as the foundation, because the client's team was already comfortable with it.
+
+A custom PHP plugin for role-based access control that wraps WooCommerce capabilities and adds region-scoped permissions on top.
+
+Three dashboards (admin, manager, pandit) built as separate plugin modules, each rendered conditionally based on the logged-in user's role.
+
+Custom post types for puja bookings, pandit availability, and temple inventory.
+
+A WooCommerce extension that hooks into the order lifecycle and routes orders to the correct manager, who routes them to the correct pandit.
+
+Why this beat off-the-shelf:
+
+One plugin to update, not five. Stability ages well.
+
+All business logic lives in one place — easier to audit, easier to extend.
+
+The dashboards share a design system, so they read as one product instead of a Frankenstein.
+
+When the client asks for a new role or workflow, it's a feature branch, not a plugin hunt.
+
+What I'd do differently next time:
+
+I'd build the role-permission layer first, before any UI. I rebuilt it twice because the early role assumptions changed once real users started flowing through.
+
+I'd write the order-routing tests up front. Multi-stakeholder workflows fail silently if you don't, and "silently broken" is the worst kind of bug to catch in production.
+
+The platform now handles temple service operations across multiple stakeholders. Custom plugins were the right call.`
+    },
+    5: {
+      title: "What I Learned Shipping 18 Production Websites Across 7 Verticals",
+      category: "Lessons",
+      date: "Jan 10, 2026",
+      content: `Over the past three years I've shipped 18+ production websites and platforms across real estate, healthcare, e-commerce, consulting, investment, architecture, and religious services. A retrospective on the patterns that worked across all of them — and the three I'll never reuse.
+
+What worked everywhere:
+
+Lead the design with one number the client cares about. Real-estate clients care about qualified leads per month. Healthcare cares about appointment booking rate. Consultancies care about discovery-call requests. Build the visual hierarchy around that one number. Everything else is secondary.
+
+The hero is a promise, not a description. Most client briefs start with "tell people what we do." The sites that converted started with "tell people what they get." The difference is the bounce rate.
+
+Mobile-first, but mobile-equal. "Mobile-first" usually means designed on mobile and audited on desktop. Equal-priority means the mobile experience is shipped, tested, and iterated like the desktop one. Half my clients' traffic is mobile; treating it as a derivative is leaving conversions on the table.
+
+SEO is structure, not keywords. Every site that ranked got there through clean URL structure, semantic HTML, schema markup, and fast Core Web Vitals — not keyword density. The pages I'm proudest of don't read like they were written for search engines.
+
+Build for the team that will run it, not the team that built it. Especially on WordPress builds. If the client's marketing person can't update the homepage hero in under 60 seconds, the site will get stale within a quarter.
+
+What I'll never reuse:
+
+Page builders for anything beyond a brochure. They feel productive on day one and become an albatross by month six. Custom code stays maintainable; Elementor's plugin sprawl doesn't.
+
+Off-the-shelf "premium" themes for serious clients. They make you fight the theme to ship a brand. Cleaner to build to spec.
+
+Over-architected component systems for sites under 20 pages. The setup cost dwarfs the maintenance benefit at that size. I default to flat structure now and refactor when complexity earns it.
+
+The biggest lesson across 18 builds: the best portfolios I've made were the ones where I pushed back hardest on the brief. Clients don't always know what they need. Pushing back, with evidence, is part of the job.`
     }
   };
 
@@ -392,36 +492,68 @@ By coding with functional minimalism, you ensure that the project remains light,
     });
   }
 
+  // ============================================================
+  // CONTACT FORM → Google Sheets via Apps Script Web App
+  // ------------------------------------------------------------
+  // 1. Create a Google Sheet with these headers in row 1 of the
+  //    "Contacts" tab:
+  //       Timestamp | First Name | Last Name | Email |
+  //       Hiring Type | Subject | Message | User Agent
+  // 2. Extensions → Apps Script → paste the Code.gs from the
+  //    punch-list PDF → Deploy as Web App
+  //    (Execute as: Me, Access: Anyone)
+  // 3. Paste the deployment URL below.
+  // ============================================================
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzdLKuMrpci_MkX29bg6ExCGK_sutId9IKriQj97W50bnOqFs9_wTe3XZ983lQpbf1_Pw/exec";
+
   if (contactForm) {
-    contactForm.addEventListener("submit", (e) => {
+    contactForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      
+
+      const submitBtn = contactForm.querySelector('button[type="submit"]');
+      const originalBtnHtml = submitBtn ? submitBtn.innerHTML : null;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = "Sending…";
+      }
+
       const formData = {
-        firstName: document.getElementById("firstName").value,
-        lastName: document.getElementById("lastName").value,
-        email: document.getElementById("email").value,
+        firstName: document.getElementById("firstName").value.trim(),
+        lastName: document.getElementById("lastName").value.trim(),
+        email: document.getElementById("email").value.trim(),
         hiringType: hiringTypeSelect.value,
-        subject: document.getElementById("subject").value,
-        message: document.getElementById("message").value
+        subject: document.getElementById("subject").value.trim(),
+        message: document.getElementById("message").value.trim(),
+        userAgent: navigator.userAgent
       };
 
-      if (typeof emailjs !== "undefined") {
-        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', formData)
-          .then(() => {
-            successMsg.classList.remove("hidden");
-            errorMsg.classList.add("hidden");
-            contactForm.reset();
-          }, (err) => {
-            console.error('EmailJS Error:', err);
-            errorMsg.classList.remove("hidden");
-            successMsg.classList.add("hidden");
-          });
-      } else {
-        // Mock fallback if EmailJS is not fully initialized
-        console.log("Submit Form Data (Offline fallback):", formData);
+      try {
+        if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL.startsWith("PASTE_")) {
+          throw new Error("Apps Script URL not configured");
+        }
+
+        // no-cors required because Apps Script Web Apps don't return
+        // proper CORS headers. The POST still lands; we just can't
+        // read the response.
+        await fetch(APPS_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(formData)
+        });
+
         successMsg.classList.remove("hidden");
         errorMsg.classList.add("hidden");
         contactForm.reset();
+      } catch (err) {
+        console.error("Contact form error:", err);
+        errorMsg.classList.remove("hidden");
+        successMsg.classList.add("hidden");
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHtml;
+        }
       }
     });
   }
@@ -526,15 +658,17 @@ By coding with functional minimalism, you ensure that the project remains light,
         statsRow.classList.add("hidden");
       }
 
-      // Populate Client / Category / Date Info Bar
-      const infoBar = document.getElementById("modal-info-bar");
-      if (btn.dataset.client || btn.dataset.category || btn.dataset.date) {
-        infoBar.classList.remove("hidden");
-        document.getElementById("modal-client").innerText = btn.dataset.client || "—";
-        document.getElementById("modal-category").innerText = btn.dataset.category || "—";
-        document.getElementById("modal-date").innerText = btn.dataset.date || "—";
-      } else {
-        infoBar.classList.add("hidden");
+
+      // Populate Proof Image (Similarweb, n8n workflow, dashboard, etc.)
+      const proofContainer = document.getElementById("modal-proof-container");
+      if (proofContainer) {
+        if (btn.dataset.proofImage) {
+          proofContainer.classList.remove("hidden");
+          document.getElementById("modal-proof-image").src = btn.dataset.proofImage;
+          document.getElementById("modal-proof-caption").innerText = btn.dataset.proofCaption || "";
+        } else {
+          proofContainer.classList.add("hidden");
+        }
       }
 
       // Populate Key Results Box
